@@ -3,7 +3,7 @@ var express = require("express");
 var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
-var db = require("./models");
+var db = require("./models/Article");
 var PORT = 3000;
 var app = express();
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
@@ -21,8 +21,16 @@ app.get("/scrape", function(req, res) {
        $("h3").each(function(i, element) {
            var result = {};
 
-       });
-    
+           result.title = $(this)
+            .children("a")
+            .text();
+
+           result.link = $(this)
+            .children("a")
+            .attr("href");
+
+            console.log(result.link);
+       });  
     });
 });
 
